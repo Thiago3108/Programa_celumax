@@ -1,5 +1,129 @@
 {% include 'admin/cabecera.html' %}
+<br/>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
 
-administrador de recibos
+            <div class="card">
+                <div class="card-header">
+                    Datos de los productos
+                </div>
+                <div class="card-body">
+                    
+                    <form action="/admin/recibos/guardar" method="post"  enctype="multipart/form-data">
+                        <div class="mb-2">
+                          <label class="form-label" for="txtNombrerecibo">Nombre</label>
+                          <input placeholder="Por favor ingrese el nombre" class="form-control" name="txtNombrerecibo" type="text"  id="txtNombrerecibo" aria-describedby="helpId" >
+                        </div>
+                        
+                        <div class="mb-2">
+                          <label class="form-label" for="txtCC">CC.</label>
+                          <input placeholder="Por favor ingrese el CC" class="form-control" name="txtCC" type="number" id="txtCC" aria-describedby="helpId" >
+                        </div>
+              
+                        <div class="mb-2">
+                          <label class="form-label" for="txtTel">Tel.</label>
+                          <input placeholder="Por favor ingrese el telefono" class="form-control" name="txtTel" type="number" id="txtTel" aria-describedby="helpId" >
+                        </div>
+              
+                        <div class="mb-2">
+                          <label class="form-label" for="txtEquipo">Equipo telefonico</label>
+                          <input placeholder="Por favor ingrese el equipo del cliente" class="form-control" name="txtEquipo" type="text" id="txtEquipo" aria-describedby="helpId" >
+                        </div>
+              
+                        <div class="mb-2">
+                          <label class="form-label" for="txtImei">Imei</label>
+                          <input placeholder="Por favor ingrese el imei del equipo" class="form-control" name="txtImei" type="text" id="txtImei" aria-describedby="helpId" >
+                        </div>
+              
+                        <div class="mb-2">
+                          <label class="form-label" for="txtProcedimiento">Procedimiento</label>
+                          <input placeholder="Por favor ingrese el procedimiento a realizar" class="form-control" name="txtProcedimiento" type="text" id="txtProcedimiento" aria-describedby="helpId" >
+                        </div>
+                        
+                        <div class="mb-2">
+                          <label class="form-label" for="txtValor">Valor</label>
+                          <input placeholder="Por favor ingrese el valor del trabajo" class="form-control" name="txtValor" type="number" id="txtValor" aria-describedby="helpId" >
+                        </div>
+              
+                        <div class="mb-2">
+                          <label class="form-label" for="txtAbono">Abono</label>
+                          <input placeholder="Por favor ingrese el abono realizado" class="form-control" name="txtAbono" type="number" id="txtAbono" aria-describedby="helpId" >
+                        </div>
+              
+                        <div class="mb-3">
+                          <label class="form-label" for="txtClave">Clave</label>
+                          <input placeholder="Por favor ingrese la clave" class="form-control" name="txtClave" type="texto" id="txtClave" aria-describedby="helpId" >
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Agregar</button>
+              
+                    </form>
+
+
+                </div>
+                <div class="card-footer text-muted">
+        
+                </div>
+            </div>   
+        </div>
+
+        <div class="col-md-8">
+            
+            <div class="table-responsive">
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">CC</th>
+                            <th scope="col">Tel.</th>
+                            <th scope="col">Equipo</th>
+                            <th scope="col">Imei</th>
+                            <th scope="col">Procedimiento</th>
+                            <th scope="col">Valor</th>
+                            <th scope="col">Abono</th>
+                            <th scope="col">Clave</th>
+                            <th scope="col">Accion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for recibo in recibos %}
+                        <tr class="">
+                            <td>{{ recibo[0] }}</td>
+                            <td>{{ recibo[1] }}</td>
+                            <td>{{ recibo[2] }}</td>
+                            <td>{{ recibo[3] }}</td>
+                            <td>{{ recibo[4] }}</td>
+                            <td>{{ recibo[5] }}</td>
+                            <td>{{ recibo[6] }}</td>
+                            <td>{{ recibo[7] }}</td>
+                            <td>{{ recibo[8] }}</td>
+                            <td>{{ recibo[9] }}</td>
+                            <td>{{ recibo[10] }}</td>
+                            <td>
+                                <form action="/admin/recibos/borrar" method="post">
+                                <input value="{{ recibo[0] }}" type="text" name="txtID" id="txtID">
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                </form>
+
+
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+
+
+        </div>
+
+        
+        
+    </div>
+</div>
 
 {% include 'admin/pie.html' %}
