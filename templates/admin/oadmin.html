@@ -2,7 +2,7 @@
 <br/>
 <div class="container">
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-4">
 
             <div class="card">
                 <div class="card-header">
@@ -12,20 +12,22 @@
                     
                     <form action="/admin/adm/guardar" method="post"  enctype="multipart/form-data">
                         <div class="mb-3">
-                          <label for="txtNombre" class="form-label">Nombre del producto:</label>
-                          <input type="text"
-                            class="form-control" name="txtNombre" id="txtNombre" aria-describedby="helpId" placeholder="Escriba el nombre del producto">
+                          <label for="txtProducto" class="form-label">Nombre del producto:</label>
+                          <input type="text" class="form-control" name="txtProducto" id="txtProducto" aria-describedby="helpId" placeholder="Escriba el nombre del producto">
                         </div>
                          <div class="mb-3">
                           <label for="txtImagen" class="form-label">Imagen:</label>
-                          <input type="file"
-                            class="form-control" name="txtImagen" id="txtImagen" aria-describedby="helpId" placeholder="Copie aqui la foto del producto">
+                          <input type="file" class="form-control" name="txtImagen" id="txtImagen" aria-describedby="helpId" placeholder="Copie aqui la foto del producto">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="txtPrecio" class="form-label">Precio</label>
+                            <input type="number" class="form-control" name="txtPrecio" id="txtPrecio" aria-describedby="helpId" placeholder="Ingrese el precio del producto">
                         </div>
 
                         <div class="mb-3">
                           <label for="txtNumber" class="form-label">No.</label>
-                          <input type="number"
-                            class="form-control" name="txtNumber" id="txtNumber" aria-describedby="helpId" placeholder="Ingrese la cantidad obtenida">
+                          <input type="number" class="form-control" name="txtNumber" id="txtNumber" aria-describedby="helpId" placeholder="Ingrese la cantidad obtenida">
                         </div>
 
                         <button type="submit" class="btn btn-primary">Agregar</button>
@@ -39,28 +41,38 @@
                 </div>
             </div>   
         </div>
-        <div class="col-md-7">
+        <div class="col-md-8">
             
             <div class="table-responsive">
 
-                <table class="table table-primary">
+                <table class="table ">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Nombre</th>
+                            <th scope="col">Producto</th>
                             <th scope="col">Image</th>
+                            <th scope="col">Precio</th>
                             <th scope="col">No.</th>
                             <th scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {% for producto in productos %}
                         <tr class="">
-                            <td>1</td>
-                            <td>Cable type c</td>
-                            <td>imagen.jpg</td>
-                            <td>2345</td>
-                            <td>Eliminar</td>
+                            <td>{{ producto[0] }}</td>
+                            <td>{{ producto[1] }}</td>
+                            <td>{{ producto[2] }}</td>
+                            <td>{{ producto[3] }}</td>
+                            <td>{{ producto[4] }}</td>
+                            <td>
+                                <form action="/admin/adm/borrar" method="post">
+                                <input value="{{ producto[0] }}" type="text" name="txtID2" id="txtID2">
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                </form>
+
+                            </td>
                         </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>

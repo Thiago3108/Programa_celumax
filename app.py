@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import render_template, request, redirect
 from flaskext.mysql import MySQL
-from datetime import datetime
+
 app=Flask(__name__)
 mysql=MySQL()
 
@@ -34,7 +34,14 @@ def productos():
 
 @app.route("/admin/adm")
 def adm():
-    return render_template("admin/oadmin.html")
+    conexion=mysql.connect()
+    cursor=conexion.cursor()
+    cursor.execute("SELECT * FROM `productos`")
+    producto=cursor.fetchall()
+    conexion.commit()
+    print(producto)
+
+    return render_template("admin/oadmin.html", producto=producto)
 
 @app.route("/admin")
 def admin_index():
@@ -45,14 +52,46 @@ def admin_login():
     return render_template("admin/login.html")
 
 @app.route("/admin/adm/guardar", methods=["POST"])
-def admin_productos_guardar():
-    _nombre=request.form["txtNombre"]
-    _imagen=request.files["txtImagen"]
-    _numero=request.form["txtNumber"]
-    print(_nombre)
-    print(_imagen)
-    print(_numero)
+def admin_producto_guardar():
+    _producto=request.form["txtProducto"]
+    _img=request.files["txtImagen"]
+    _precio=request.form["txtPrecio"]
+    _no=request.form["txtNumber"]
+
+    sql="INSERT INTO `productos` (`ID`, `Producto`, `Imagen`, `Precio`, `No`) VALUES (NULL,%s, %s, %s,%s);"
+    datos2=(_producto,_img,_precio,_no)
+    conexion=mysql.connect()
+    cursor=conexion.cursor()
+    cursor.execute(sql,datos2)
+    conexion.commit()
+
+    print(_producto)
+    print(_img)
+    print(_precio)
+    print(_no)
+
     return redirect("/admin/adm")
+
+@app.route("/admin/adm/borrar", methods=["POST"])
+def admin_producto_borrar():
+
+    _id2=request.form["txtID2"]
+    print(_id2)
+
+    conexion=mysql.connect()
+    cursor=conexion.cursor()
+    cursor.execute("SELECT * FROM `productos` WHERE id=%s",(_id2))
+    productos=cursor.fetchall()
+    conexion.commit()
+    print(productos)
+
+    conexion=mysql.connect()
+    cursor=conexion.cursor()
+    cursor.execute("DELETE FROM productos WHERE id=%s",(_id2))
+    conexion.commit()
+
+    return redirect("/admin/adm")
+
 
 @app.route("/admin/recibos/guardar", methods=["POST"])
 def admin_recibos_guardar():
@@ -66,10 +105,6 @@ def admin_recibos_guardar():
     _abono=request.form["txtAbono"]
     _clave=request.form["txtClave"]
 
-    # Obtener la fecha actual
-    fecha_actual = datetime.now()
-    # Convertir la fecha en un formato legible para la web
-    fecha_formateada = fecha_actual.strftime('%d/%m/%Y %H:%M:%S')
 
     sql="INSERT INTO `recibos` (`ID`, `Fecha`, `Nombre`, `CC.`, `Tel.`, `Equipo`, `Imei`, `Procedimiento`, `Valor`, `Abono`, `Clave`) VALUES (NULL, current_timestamp(), %s, %s, %s,%s,%s, %s, %s, %s, %s);"
     datos=(_nombre,_cc,_tel,_equipo,_imei,_procedimiento,_valor,_abono,_clave)
