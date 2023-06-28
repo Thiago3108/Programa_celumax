@@ -37,11 +37,11 @@ def adm():
     conexion=mysql.connect()
     cursor=conexion.cursor()
     cursor.execute("SELECT * FROM `productos`")
-    producto=cursor.fetchall()
+    productos=cursor.fetchall()
     conexion.commit()
-    print(producto)
+    print(productos)
 
-    return render_template("admin/oadmin.html", producto=producto)
+    return render_template("admin/oadmin.html", productos=productos)
 
 @app.route("/admin")
 def admin_index():
