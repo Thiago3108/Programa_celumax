@@ -214,29 +214,30 @@ def admin_recibo_imprimir():
     if not "login" in session:
         return redirect("/admin/login")
     
-    nombre = request.form['txtNombrerecibo']
-    cc = request.form['txtCC']
-    tel = request.form['txtTel']
-    equipo = request.form['txtEquipo']
-    imei = request.form['txtImei']
-    procedimiento = request.form['txtProcedimiento']
-    valor = request.form['txtValor']
-    abono = request.form['txtAbono']
-    clave = request.form['txtClave']
+    # Ruta del archivo de plantilla de Word
+    plantilla_docx = "ruta/a/tu/plantilla.docx"
 
-    doc = Document()
-    doc.add_heading('Información del Usuario', level=1)
-    doc.add_paragraph(f'Nombre: {nombre}')
-    doc.add_paragraph(f'Cédula: {cc}')
-    doc.add_paragraph(f'Teléfono: {tel}')
-    doc.add_paragraph(f'Equipo: {equipo}')
-    doc.add_paragraph(f'IMEI: {imei}')
-    doc.add_paragraph(f'Procedimiento: {procedimiento}')
-    doc.add_paragraph(f'Valor: {valor}')
-    doc.add_paragraph(f'Abono: {abono}')
-    doc.add_paragraph(f'Clave: {clave}')
+    # Datos del formulario (puedes obtenerlos a través de algún medio, como una solicitud POST)
+    datos_formulario = {
+        'nombre': 'Juan Pérez',
+        'email': 'juan@example.com',
+        'telefono': '123456789'
+    }
 
-    doc.save('documento_generado.docx')
+    # Carga el documento de Word
+    doc = Document(plantilla_docx)
+
+    # Recorre los párrafos del documento
+    for paragraph in doc.paragraphs:
+        # Busca los marcadores en cada párrafo
+        for marcador in datos_formulario:
+            if marcador in paragraph.text:
+                # Reemplaza el marcador con el valor del formulario
+                paragraph.text = paragraph.text.replace(marcador, datos_formulario[marcador])
+
+    # Guarda el documento con los datos del formulario agregados
+    doc_guardado = "ruta/a/tu/documento_final.docx"
+    doc.save(doc_guardado)
 
     return redirect("/admin/recibos")
 
