@@ -108,9 +108,13 @@
                                 <input value="{{ recibo[0] }}" type="text" name="txtID" id="txtID">
                                     <button type="submit" class="btn btn-danger">Eliminar</button>
                                 </form>
-
-
                             </td>
+                            <td>
+                              <form action="/admin/recibos/imprimir" method="post">
+                              <input value="{{ recibo[0] }}" type="text" name="txtID" id="txtID">
+                                  <button type="submit" class="btn btn-primary">Imprimir</button>
+                              </form>
+                          </td>
                         </tr>
                         {% endfor %}
                     </tbody>

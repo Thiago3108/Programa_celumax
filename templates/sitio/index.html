@@ -2,7 +2,7 @@
 
     <div class="p-5 bg-light">
       <div class = "container">
-        <h1 class="display-3">Celumax</h1>
+        <h1 class="display-3">{{ session["usuario"]}}</h1>
         <p class="lead">Empezar con nuestro sitio web</p>
         <hr class="my-2">
         <p>More info</p>
@@ -11,57 +11,6 @@
         </p>
       </div>
     </div>
-    <div class="p-5 bg-light">
-      <div class="container">
-        <form action="">
-          <div>
-            <label class="form-label" for="Nombre">Nombre</label>
-            <input placeholder="Por favor ingrese el nombre" class="form-control" name="Nombre" type="text"  id="Nombre">
-          </div>
-          
-          <div>
-            <label class="form-label" for="CC">CC.</label>
-            <input placeholder="Por favor ingrese el CC" class="form-control" name="CC" type="number" id="CC">
-          </div>
-
-          <div>
-            <label class="form-label" for="Tel">Tel.</label>
-            <input placeholder="Por favor ingrese el telefono" class="form-control" name="Tel" type="number" id="Tel">
-          </div>
-
-          <div>
-            <label class="form-label" for="Equipo">Equipo telefonico</label>
-            <input placeholder="Por favor ingrese el equipo del cliente" class="form-control" name="Equipo" type="text" id="Equipo">
-          </div>
-
-          <div>
-            <label class="form-label" for="Imei">Imei</label>
-            <input placeholder="Por favor ingrese el imei del equipo" class="form-control" name="Imei" type="text" id="Imei">
-          </div>
-
-          <div>
-            <label class="form-label" for="Procedimiento">Procedimiento</label>
-            <input placeholder="Por favor ingrese el procedimiento a realizar" class="form-control" name="Procedimiento" type="text" id="Procedimiento">
-          </div>
-          
-          <div>
-            <label class="form-label" for="Valor">Valor</label>
-            <input placeholder="Por favor ingrese el valor del trabajo" class="form-control" name="Valor" type="number" id="Valor">
-          </div>
-
-          <div>
-            <label class="form-label" for="Abono">Abono</label>
-            <input placeholder="Por favor ingrese el abono realizado" class="form-control" name="Abono" type="number" id="Abono">
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label" for="Clave">Clave</label>
-            <input placeholder="Por favor ingrese la clave" class="form-control" name="Clave" type="texto" id="Clave">
-          </div>
-
-          <input class="mb-3" type="submit"  id="send">
-        </form>
-      </div>
-    </div>
+    
 
 {% include 'sitio/pie.html' %}
