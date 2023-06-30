@@ -10,10 +10,6 @@ from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 from docx.shared import Pt
 import win32api
 
-
-
-
-
 app=Flask(__name__)
 app.secret_key="celumax"
 mysql=MySQL()
