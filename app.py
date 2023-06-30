@@ -6,9 +6,10 @@ from flask import send_from_directory
 import os
 from flask import current_app
 from docx import Document
-from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 from docx.shared import Pt
 import win32api
+
 
 
 
@@ -246,17 +247,24 @@ def admin_recibo_imprimir():
     # Abrir el documento existente
     document = Document(ruta_documento)
 
-    # Crear un nuevo párrafo para agregar los inputs
-    nuevo_parrafo = document.add_paragraph()
+    # Obtener el cuerpo principal del documento
+    cuerpo_principal = document.paragraphs
 
-    # Configurar el estilo del párrafo
-    nuevo_parrafo.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-    nuevo_parrafo.space_after = Pt(5)
+    # Crear un nuevo párrafo para agregar los inputs
+    nuevo_parrafo = cuerpo_principal[11].insert_paragraph_before()
+    nuevo_parrafo.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
+    nuevo_parrafo.space_after = Pt(12)
 
     # Añadir los inputs al párrafo
     for campo, valor in datos.items():
-        run = nuevo_parrafo.add_run(f"{campo}: {valor}\n")
-        run.bold = True  # Opcional: establecer el texto en negrita
+        run_campo = nuevo_parrafo.add_run(f"{campo}:")
+        run_campo.bold = True
+        run_campo.font.size = Pt(9)
+        
+        run_valor = nuevo_parrafo.add_run(f" {valor}")
+        run_valor.font.size = Pt(9)
+
+        run_valor.add_break()
 
     # Guardar el documento modificado
     ruta_documento_modificado = os.path.join(current_app.root_path, "templates", "sitio", "recibos", "Recibos", f"{_nombre}.docx")
