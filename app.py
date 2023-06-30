@@ -9,6 +9,7 @@ from docx import Document
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 from docx.shared import Pt
 import win32api
+from escpos.printer import Usb
 
 app=Flask(__name__)
 app.secret_key="celumax"
@@ -266,10 +267,11 @@ def admin_recibo_imprimir():
     ruta_documento_modificado = os.path.join(current_app.root_path, "templates", "sitio", "recibos", "Recibos", f"{_nombre}.docx")
     document.save(ruta_documento_modificado)
 
-    # Imprimir el documento
+    # Imprimir el documento en la impresora de recibos
     win32api.ShellExecute(0, "print", ruta_documento_modificado, None, ".", 0)
 
     return redirect("/admin/recibos")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
