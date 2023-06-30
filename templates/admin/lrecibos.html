@@ -110,11 +110,20 @@
                                     
                                 </form>
                             </td>
-                            <td>
-                              <form action="/admin/recibos/imprimir" method="post">
-                              <input value="{{ recibo[0] }}" type="text" name="txtID" id="txtID">
-                                  <button type="submit" class="btn btn-primary">Imprimir</button>
-                              </form>
+                          <td>
+                            <form action="/admin/recibos/imprimir" method="post">
+                                <input value="{{ recibo[0] }}" type="hidden" name="txtID" id="txtID">
+                                <input value="{{ recibo[2] }}" type="hidden" name="txtNombrerecibo" id="txtNombrerecibo">
+                                <input value="{{ recibo[3] }}" type="hidden" name="txtCC" id="txtCC">
+                                <input value="{{ recibo[4] }}" type="hidden" name="txtTel" id="txtTel">
+                                <input value="{{ recibo[5] }}" type="hidden" name="txtEquipo" id="txtEquipo">
+                                <input value="{{ recibo[6] }}" type="hidden" name="txtImei" id="txtImei">
+                                <input value="{{ recibo[7] }}" type="hidden" name="txtProcedimiento" id="txtProcedimiento">
+                                <input value="{{ recibo[8] }}" type="hidden" name="txtValor" id="txtValor">
+                                <input value="{{ recibo[9] }}" type="hidden" name="txtAbono" id="txtAbono">
+                                <input value="{{ recibo[10] }}" type="hidden" name="txtClave" id="txtClave">
+                                <button type="submit" class="btn btn-primary">Imprimir</button>
+                            </form>
                           </td>
                         </tr>
                         {% endfor %}

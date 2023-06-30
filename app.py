@@ -4,8 +4,12 @@ from flaskext.mysql import MySQL
 from datetime import datetime
 from flask import send_from_directory
 import os
-
+from flask import current_app
 from docx import Document
+from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.shared import Pt
+import win32api
+
 
 
 
@@ -213,31 +217,53 @@ def admin_recibo_borrar():
 def admin_recibo_imprimir():
     if not "login" in session:
         return redirect("/admin/login")
-    
-    # Ruta del archivo de plantilla de Word
-    plantilla_docx = "ruta/a/tu/plantilla.docx"
 
-    # Datos del formulario (puedes obtenerlos a través de algún medio, como una solicitud POST)
-    datos_formulario = {
-        'nombre': 'Juan Pérez',
-        'email': 'juan@example.com',
-        'telefono': '123456789'
+    _nombre = request.form["txtNombrerecibo"]
+    _cc = request.form["txtCC"]
+    _tel = request.form["txtTel"]
+    _equipo = request.form["txtEquipo"]
+    _imei = request.form["txtImei"]
+    _procedimiento = request.form["txtProcedimiento"]
+    _valor = request.form["txtValor"]
+    _abono = request.form["txtAbono"]
+    _clave = request.form["txtClave"]
+
+    datos = {
+        "Nombre": _nombre,
+        "CC": _cc,
+        "Tel": _tel,
+        "Equipo": _equipo,
+        "Imei": _imei,
+        "Procedimiento": _procedimiento,
+        "Valor": _valor,
+        "Abono": _abono,
+        "Clave": _clave
     }
 
-    # Carga el documento de Word
-    doc = Document(plantilla_docx)
+    # Construir la ruta al documento existente
+    ruta_documento = os.path.join(current_app.root_path, "templates", "sitio", "recibos", "Recibos.docx")
 
-    # Recorre los párrafos del documento
-    for paragraph in doc.paragraphs:
-        # Busca los marcadores en cada párrafo
-        for marcador in datos_formulario:
-            if marcador in paragraph.text:
-                # Reemplaza el marcador con el valor del formulario
-                paragraph.text = paragraph.text.replace(marcador, datos_formulario[marcador])
+    # Abrir el documento existente
+    document = Document(ruta_documento)
 
-    # Guarda el documento con los datos del formulario agregados
-    doc_guardado = "ruta/a/tu/documento_final.docx"
-    doc.save(doc_guardado)
+    # Crear un nuevo párrafo para agregar los inputs
+    nuevo_parrafo = document.add_paragraph()
+
+    # Configurar el estilo del párrafo
+    nuevo_parrafo.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+    nuevo_parrafo.space_after = Pt(5)
+
+    # Añadir los inputs al párrafo
+    for campo, valor in datos.items():
+        run = nuevo_parrafo.add_run(f"{campo}: {valor}\n")
+        run.bold = True  # Opcional: establecer el texto en negrita
+
+    # Guardar el documento modificado
+    ruta_documento_modificado = os.path.join(current_app.root_path, "templates", "sitio", "recibos", "Recibos", f"{_nombre}.docx")
+    document.save(ruta_documento_modificado)
+
+    # Imprimir el documento
+    win32api.ShellExecute(0, "print", ruta_documento_modificado, None, ".", 0)
 
     return redirect("/admin/recibos")
 
