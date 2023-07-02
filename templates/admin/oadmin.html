@@ -63,13 +63,12 @@
                             <td>{{ producto[1] }}</td>
                             <td>
                                 <img with="60" src="/img/{{ producto[2] }}" class="img-fluid rounded-top" alt="">
-                                {{ producto[2] }}
                             </td>
                             <td>{{ producto[3] }}</td>
                             <td>{{ producto[4] }}</td>
                             <td>
                                 <form action="/admin/adm/borrar" method="post">
-                                <input value="{{ producto[0] }}" type="text" name="txtID2" id="txtID2">
+                                <input value="{{ producto[0] }}" type="hidden" name="txtID2" id="txtID2">
                                     <button type="submit" class="btn btn-danger">Eliminar</button>
                                 </form>
 

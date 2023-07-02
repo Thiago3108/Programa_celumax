@@ -72,7 +72,7 @@
             
             <div class="table-responsive">
 
-                <table class="table">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -105,7 +105,7 @@
                             <td>{{ recibo[10] }}</td>
                             <td>
                                 <form action="/admin/recibos/borrar" method="post">
-                                <input value="{{ recibo[0] }}" type="text" name="txtID" id="txtID">
+                                <input value="{{ recibo[0] }}" type="hidden" name="txtID" id="txtID">
                                     <button type="submit" class="btn btn-danger">Eliminar</button>
                                     
                                 </form>

@@ -1,5 +1,4 @@
-from flask import Flask
-from flask import render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session
 from flaskext.mysql import MySQL
 from datetime import datetime
 from flask import send_from_directory
@@ -31,6 +30,10 @@ def inicio():
 def imagenes(imagen):
     print(imagen)
     return send_from_directory(os.path.join("templates/sitio/img"), imagen)
+
+@app.route("/css/<archivocss>")
+def css_lñink(archivocss):
+    return send_from_directory(os.path.join("templates/sitio/css"),archivocss)
 
 @app.route("/admin/recibos")
 def recibos():
@@ -93,7 +96,7 @@ def admin_login_post():
         session["usuario"]="Celumax"
         return redirect("/admin") 
 
-    return render_template("admin/login.html")
+    return render_template("admin/login.html", mensaje="Acceso denegado")
 
 @app.route("/admin/cerrar")
 def admin_login_cerrar():
@@ -271,6 +274,7 @@ def admin_recibo_imprimir():
     win32api.ShellExecute(0, "print", ruta_documento_modificado, None, ".", 0)
 
     return redirect("/admin/recibos")
+
 
 
 if __name__ == "__main__":
