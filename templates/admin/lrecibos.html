@@ -104,6 +104,29 @@
                             <td>{{ recibo[9] }}</td>
                             <td>{{ recibo[10] }}</td>
                             <td>
+                              <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                <button type="button" class="btn btn-success">Editar</button>
+                                <div class="btn-group" role="group">
+                                  <button id="btnGroupDrop2" type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                  <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
+                                    <form action="/admin/recibos/editar" method="post">
+                                      <input value="{{ recibo[0] }}" type="hidden" name="txtID" id="txtID">
+                                      <input value="{{ recibo[2] }}" type="text" name="txtNombrerecibo" id="txtNombrerecibo">
+                                      <input value="{{ recibo[3] }}" type="text" name="txtCC" id="txtCC">
+                                      <input value="{{ recibo[4] }}" type="text" name="txtTel" id="txtTel">
+                                      <input value="{{ recibo[5] }}" type="text" name="txtEquipo" id="txtEquipo">
+                                      <input value="{{ recibo[6] }}" type="text" name="txtImei" id="txtImei">
+                                      <input value="{{ recibo[7] }}" type="text" name="txtProcedimiento" id="txtProcedimiento">
+                                      <input value="{{ recibo[8] }}" type="text" name="txtValor" id="txtValor">
+                                      <input value="{{ recibo[9] }}" type="text" name="txtAbono" id="txtAbono">
+                                      <input value="{{ recibo[10] }}" type="text" name="txtClave" id="txtClave">
+                                          <button type="submit" class="btn btn-success">Editar</button>
+                                      </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
                                 <form action="/admin/recibos/borrar" method="post">
                                 <input value="{{ recibo[0] }}" type="hidden" name="txtID" id="txtID">
                                     <button type="submit" class="btn btn-danger">Eliminar</button>

@@ -9,11 +9,13 @@ from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 from docx.shared import Pt
 import win32api
 from escpos.printer import Usb
+from werkzeug.utils import secure_filename
+
 
 app=Flask(__name__)
 app.secret_key="celumax"
 mysql=MySQL()
-
+app.config['UPLOAD_FOLDER'] = 'templates/sitio/img/'
 
 app.config["MYSQL_DATABASE_HOST"]="localhost"   #dominio, localhost, entre otros 
 app.config["MYSQL_DATABASE_USER"]="root"
@@ -160,6 +162,46 @@ def admin_producto_borrar():
 
     return redirect("/admin/adm")
 
+@app.route('/admin/adm/editar', methods=['GET', 'POST'])
+def admin_adm_editar_post():
+    if 'login' not in session:
+        return redirect('/admin/login')
+
+    if request.method == 'POST':
+        id = request.form['txtID2']
+        producto = request.form["txtProducto"]
+        img = request.files["txtImagen"]
+        precio = request.form["txtPrecio"]
+        no = request.form["txtNumber"]
+
+        # Obtener el nombre seguro del archivo
+        filename = secure_filename(img.filename)
+
+        # Guardar el archivo en el directorio de carga
+        img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+        conexion = mysql.connect()
+        cursor = conexion.cursor()
+        cursor.execute("UPDATE productos SET Producto = %s, Imagen = %s, Precio = %s, No = %s WHERE ID = %s",
+                       (producto, filename, precio, no, id))
+        conexion.commit()
+        cursor.close()
+        conexion.close()
+
+        return redirect('/admin/adm')
+
+    else:
+        id = request.args.get('id')
+
+        conexion = mysql.connect()
+        cursor = conexion.cursor()
+        cursor.execute("SELECT * FROM productos WHERE ID = %s", (id,))
+        data = cursor.fetchone()
+        cursor.close()
+        conexion.close()
+
+        return render_template('/admin/adm/editar.html', producto=data)
+
 @app.route("/admin/recibos/guardar", methods=["POST"])
 def admin_recibos_guardar():
     if not "login" in session:
@@ -275,7 +317,44 @@ def admin_recibo_imprimir():
 
     return redirect("/admin/recibos")
 
+@app.route('/admin/recibos/editar', methods=['GET', 'POST'])
+def admin_recibos_editar_post():
+    if 'login' not in session:
+        return redirect('/admin/login')
 
+    if request.method == 'POST':
+        id = request.form['txtID']
+        nombre = request.form['txtNombrerecibo']
+        cc = request.form['txtCC']
+        tel = request.form['txtTel']
+        equipo = request.form['txtEquipo']
+        imei = request.form['txtImei']
+        procedimiento = request.form['txtProcedimiento']
+        valor = request.form['txtValor']
+        abono = request.form['txtAbono']
+        clave = request.form['txtClave']
+
+        conexion = mysql.connect()
+        cursor = conexion.cursor()
+        cursor.execute("UPDATE recibos SET Nombre = %s, `CC.` = %s, `Tel.` = %s, Equipo = %s, Imei = %s, Procedimiento = %s, Valor = %s, Abono = %s, Clave = %s WHERE ID = %s",
+                       (nombre, cc, tel, equipo, imei, procedimiento, valor, abono, clave, id))
+        conexion.commit()
+        cursor.close()
+        conexion.close()
+
+        return redirect('/admin/recibos')
+
+    else:
+        id = request.args.get('id')
+
+        conexion = mysql.connect()
+        cursor = conexion.cursor()
+        cursor.execute("SELECT * FROM recibos WHERE ID = %s", (id,))
+        data = cursor.fetchone()
+        cursor.close()
+        conexion.close()
+
+        return render_template('/admin/recibos/editar', recibo=data)
 
 if __name__ == "__main__":
     app.run(debug=True)

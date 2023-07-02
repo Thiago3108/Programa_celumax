@@ -67,6 +67,24 @@
                             <td>{{ producto[3] }}</td>
                             <td>{{ producto[4] }}</td>
                             <td>
+                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                  <button type="button" class="btn btn-success">Editar</button>
+                                  <div class="btn-group" role="group">
+                                    <button id="btnGroupDrop2" type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
+                                      <form action="/admin/adm/editar" method="post" enctype="multipart/form-data">
+                                        <input value="{{ producto[0] }}" type="hidden" name="txtID2" id="txtID2">
+                                        <input value="{{ producto[1] }}" type="text" name="txtProducto" id="txtProducto">
+                                        <input type="file" name="txtImagen" id="txtImagen">
+                                        <input value="{{ producto[3] }}" type="text" name="txtPrecio" id="txtPrecio">
+                                        <input value="{{ producto[4] }}" type="text" name="txtNumber" id="txtNumber">
+                                            <button type="submit" class="btn btn-success">Aceptar</button>
+                                        </form>
+                                    </div>
+                                  </div>
+                                </div>
+                            </td>
+                            <td>
                                 <form action="/admin/adm/borrar" method="post">
                                 <input value="{{ producto[0] }}" type="hidden" name="txtID2" id="txtID2">
                                     <button type="submit" class="btn btn-danger">Eliminar</button>
@@ -85,7 +103,4 @@
         
     </div>
 </div>
-
-
-
 {% include 'admin/pie.html' %}
