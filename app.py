@@ -34,7 +34,7 @@ def imagenes(imagen):
     return send_from_directory(os.path.join("templates/sitio/img"), imagen)
 
 @app.route("/css/<archivocss>")
-def css_lñink(archivocss):
+def css_link(archivocss):
     return send_from_directory(os.path.join("templates/sitio/css"),archivocss)
 
 @app.route("/admin/recibos")
@@ -217,7 +217,7 @@ def admin_recibos_guardar():
     _clave=request.form["txtClave"]
 
 
-    sql="INSERT INTO `recibos` (`ID`, `Fecha`, `Nombre`, `CC.`, `Tel.`, `Equipo`, `Imei`, `Procedimiento`, `Valor`, `Abono`, `Clave`) VALUES (NULL, current_timestamp(), %s, %s, %s,%s,%s, %s, %s, %s, %s);"
+    sql="INSERT INTO `recibos` (`ID`, `Fecha`, `Nombre`, `CC`, `Tel`, `Equipo`, `Imei`, `Procedimiento`, `Valor`, `Abono`, `Clave`) VALUES (NULL, current_timestamp(), %s, %s, %s, %s, %s, %s, %s, %s, %s);"
     datos=(_nombre,_cc,_tel,_equipo,_imei,_procedimiento,_valor,_abono,_clave)
     conexion=mysql.connect()
     cursor=conexion.cursor()
@@ -336,7 +336,7 @@ def admin_recibos_editar_post():
 
         conexion = mysql.connect()
         cursor = conexion.cursor()
-        cursor.execute("UPDATE recibos SET Nombre = %s, `CC.` = %s, `Tel.` = %s, Equipo = %s, Imei = %s, Procedimiento = %s, Valor = %s, Abono = %s, Clave = %s WHERE ID = %s",
+        cursor.execute("UPDATE recibos SET Nombre = %s, `CC` = %s, `Tel` = %s, Equipo = %s, Imei = %s, Procedimiento = %s, Valor = %s, Abono = %s, Clave = %s WHERE ID = %s",
                        (nombre, cc, tel, equipo, imei, procedimiento, valor, abono, clave, id))
         conexion.commit()
         cursor.close()

@@ -71,8 +71,13 @@
         <div class="col-md-8">
             
             <div class="table-responsive">
+              <form class="d-flex">
+                <input class="form-control me-sm-2" data-table="table_id" type="text" placeholder="Buscar">
+              </form>
 
-                <table class="table table-bordered">
+              <br>
+
+                <table class="table table-bordered table_id">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -110,8 +115,8 @@
                                   <button id="btnGroupDrop2" type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                   <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
                                     <form action="/admin/recibos/editar" method="post">
-                                      <input value="{{ recibo[0] }}" type="hidden" name="txtID" id="txtID">
-                                      <input value="{{ recibo[2] }}" type="text" name="txtNombrerecibo" id="txtNombrerecibo">
+                                      <input value="{{ recibo[0] }}" type="hidden" name="txtID" id="txtID" >
+                                      <input value="{{ recibo[2] }}" type="text" name="txtNombrerecibo" id="txtNombrerecibo" >
                                       <input value="{{ recibo[3] }}" type="text" name="txtCC" id="txtCC">
                                       <input value="{{ recibo[4] }}" type="text" name="txtTel" id="txtTel">
                                       <input value="{{ recibo[5] }}" type="text" name="txtEquipo" id="txtEquipo">
