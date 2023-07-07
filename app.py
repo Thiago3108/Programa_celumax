@@ -8,7 +8,7 @@ from docx import Document
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 from docx.shared import Pt
 import win32api
-from escpos.printer import Usb
+#from escpos.printer import Usb
 from werkzeug.utils import secure_filename
 
 
